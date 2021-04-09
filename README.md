@@ -7,8 +7,7 @@ An example project showing how [FullCalendar's React Connector](https://fullcale
 ## Installation
 
 ```bash
-git clone https://github.com/fullcalendar/fullcalendar-example-projects.git
-cd fullcalendar-example-projects/react-typescript
+git clone https://github.com/tungdau93/calendar-customize.git
 npm install
 ```
 
