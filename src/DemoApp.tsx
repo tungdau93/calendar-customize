@@ -15,13 +15,16 @@ import moment from 'moment'
 interface DemoAppState {
   weekendsVisible: boolean
   currentEvents: EventApi[]
+  selectable: boolean
 }
 
 export default class DemoApp extends React.Component<{}, DemoAppState> {
   state: DemoAppState = {
     weekendsVisible: true,
-    currentEvents: []
+    currentEvents: [],
+    selectable: false
   }
+
 
   render() {
     return (
@@ -29,14 +32,6 @@ export default class DemoApp extends React.Component<{}, DemoAppState> {
         <div className='demo-app-main'>
           <FullCalendar
             plugins={[DayGridPlugin, TimeGridPlugin, InteractionPlugin, ListPlugin]}
-            // customButtons={{
-            //   myCustomButton: {
-            //     text: 'custom!',
-            //     click: function () {
-            //       alert('clicked the custom button!');
-            //     }
-            //   }
-            // }}
             headerToolbar={{
               left: 'prev,next today',
               center: 'title',
@@ -44,31 +39,20 @@ export default class DemoApp extends React.Component<{}, DemoAppState> {
             }}
             initialView='timeGridWeek'
             editable={true}
-            selectable={true}
+            selectable={this.state.selectable}
             selectMirror={true}
             dayMaxEvents={true}
             weekends={true}
-            initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
+            initialEvents={INITIAL_EVENTS}
             select={this.handleDateSelect}
-            eventContent={renderEventContent} // custom render function
+            eventContent={renderEventContent}
             eventClick={this.handleEventClick}
-            // eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
-            /* you can update a remote database when these fire:
-            eventAdd={function(){}}
-            eventChange={function(){}}
-            eventRemove={function(){}}
-            */
             weekNumberCalculation='ISO'
             titleRangeSeparator=' - '
-            // titleFormat={{
-            //   year: 'numeric', month: 'long', day: 'numeric'
-            // }}
             locale={VILocal}
             scrollTime='00:00:00'
             slotDuration='00:30:00'
             slotLabelInterval='00:30:00'
-            // slotMinTime='08:00:00'
-            // slotMaxTime='21:00:00'
             slotLabelFormat={{
               hour: '2-digit',
               minute: '2-digit',
@@ -83,15 +67,6 @@ export default class DemoApp extends React.Component<{}, DemoAppState> {
               this.handleDateClick(dateInfo)
             }}
             navLinks={true}
-            events={[
-              {
-                // daysOfWeek: [3, 4],
-                // startTime: 'T00:00:00',
-                // endTime: 'T10:00:00',
-                // display: 'background',
-                // color: '#dcdcdc',
-              }
-            ]}
             businessHours={{
               daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
               startTime: '08:00',
@@ -110,7 +85,6 @@ export default class DemoApp extends React.Component<{}, DemoAppState> {
   }
 
   handleDateSelect = (selectInfo: DateSelectArg) => {
-    // console.log(selectInfo)
     const timeBooking = moment(selectInfo.endStr).format('HH:mm:ss')
     if ('08:30:00' > timeBooking || timeBooking > '19:00:00') {
       alert('Không thể đặt lịch!')
