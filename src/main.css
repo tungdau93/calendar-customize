@@ -53,3 +53,25 @@ b { /* used for event dates/times */
   max-width: 1100px;
   margin: 0 auto;
 }
+
+.myclass1 {
+  cursor: pointer;
+}
+
+.myclass1 i {
+  font-style: unset;
+  color: var(--fc-event-text-color, #fff);
+}
+
+.fc-daygrid-event-harness{
+  display: none;
+}
+
+.fc-list-event-title i {
+  color: black;
+}
+
+.fc-daygrid-bg-harness i {
+  font-style: unset;
+  color: var(--fc-event-text-color, #fff);
+}
